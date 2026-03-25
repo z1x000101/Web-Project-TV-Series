@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iron Fist | The Immortal Weapon</title>
+    <link rel="icon" type="image/png" href="Assets\iron-fist-icon-4.png">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* ── Hero ── */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background: #050605;
+        }
+
+        /* Subtle radial glow behind the fist */
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 60% 50% at 50% 55%,
+                    rgba(255, 204, 0, 0.07) 0%,
+                    transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Fist emblem ── */
+        .fist-wrap {
+            position: relative;
+            width: clamp(130px, 22vw, 200px);
+            height: clamp(130px, 22vw, 200px);
+            margin: 0 auto 2rem;
+        }
+
+        /* Rotating ring */
+        .fist-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255, 204, 0, 0.35);
+            animation: spinRing 18s linear infinite;
+        }
+
+        .fist-ring::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary-gold);
+            box-shadow: 0 0 12px var(--primary-gold);
+        }
+
+        @keyframes spinRing {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Inner glow disc */
+        .fist-disc {
+            position: absolute;
+            inset: 12px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 204, 0, 0.10) 0%, rgba(5, 6, 5, 0.95) 65%);
+            border: 1px solid rgba(255, 204, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* SVG fist icon */
+        .fist-svg {
+            width: 52%;
+            height: 52%;
+            filter: drop-shadow(0 0 14px rgba(255, 204, 0, 0.55));
+            animation: fistPulse 3.5s ease-in-out infinite;
+        }
+
+        @keyframes fistPulse {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.4));
+                transform: scale(1);
+            }
+
+            50% {
+                filter: drop-shadow(0 0 22px rgba(255, 204, 0, 0.75));
+                transform: scale(1.04);
+            }
+        }
+
+        /* ── Hero content ── */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 680px;
+            padding: 2rem 1.5rem;
+        }
+
+        .hero-eyebrow {
+            font-family: var(--font-heading);
+            font-size: clamp(0.6rem, 1.5vw, 0.75rem);
+            letter-spacing: 10px;
+            color: var(--primary-gold);
+            text-transform: uppercase;
+            opacity: 0;
+            animation: riseIn 1s 0.2s ease-out forwards;
+            margin-bottom: 0.6rem;
+        }
+
+        .hero-text-logo {
+            font-family: var(--font-heading);
+            color: transparent;
+            font-weight: 900;
+            font-size: clamp(4.5rem, 13vw, 10rem);
+            margin: 0 auto;
+            display: inline-block;
+            -webkit-text-stroke: 2px var(--primary-gold);
+            text-shadow: 0 0 20px rgba(255, 204, 0, 0.5), 0 0 50px rgba(255, 204, 0, 0.3);
+            line-height: 0.88;
+            letter-spacing: 4px;
+            transform: perspective(500px) translateZ(40px);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: riseIn 1s 0.5s ease-out forwards;
+            margin-bottom: 0.2rem;
+        }
+
+        .hero-text-logo:hover {
+            color: var(--primary-gold);
+            filter: drop-shadow(0 0 30px var(--primary-gold)) brightness(1.2);
+            -webkit-text-stroke: 0px;
+        }
+
+        .glow-text {
+            animation: riseIn 1s 0.5s ease-out forwards, glow 1.6s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 3px rgba(255, 220, 0, 0.9),
+                    0 0 8px rgba(255, 204, 0, 0.6),
+                    0 0 18px rgba(255, 190, 0, 0.35);
+            }
+
+            to {
+                text-shadow: 0 0 2px rgba(255, 204, 0, 0.3),
+                    0 0 5px rgba(180, 140, 0, 0.15);
+            }
+        }
+
+        .hero-tagline {
+            font-family: var(--font-body);
+            font-size: clamp(0.85rem, 1.8vw, 1rem);
+            color: #a0a8a0;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: riseIn 1s 0.8s ease-out forwards;
+            margin-bottom: 1.8rem;
+        }
+
+        .hero-divider {
+            width: 48px;
+            height: 1px;
+            background: var(--primary-gold);
+            margin: 1.4rem auto;
+            opacity: 0;
+            animation: riseIn 1s 1s ease-out forwards;
+            box-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
+        }
+
+        .hero-desc {
+            font-family: var(--font-body);
+            font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+            color: #757d75;
+            line-height: 1.75;
+            max-width: 520px;
+            margin: 0 auto 2.2rem;
+            opacity: 0;
+            animation: riseIn 1s 1.2s ease-out forwards;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: riseIn 1s 1.5s ease-out forwards;
+        }
+
+        @keyframes riseIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Slim clean buttons */
+        .btn-slim {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 2rem;
+            font-family: var(--font-heading);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border-radius: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-gold {
+            background: var(--primary-gold);
+            color: #000;
+            border: none;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.2);
+        }
+
+        .btn-gold:hover {
+            background: #ffe040;
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--primary-gold);
+            border: 1px solid rgba(255, 204, 0, 0.45);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255, 204, 0, 0.06);
+            border-color: var(--primary-gold);
+            transform: translateY(-2px);
+        }
+
+        /* ── Mobile ── */
+        @media (max-width: 600px) {
+            .hero-title {
+                font-size: clamp(3.5rem, 20vw, 6rem);
+            }
+
+            .cta-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-slim {
+                width: 220px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="intro-loader">
+        <video id="intro-video" autoplay muted playsinline>
+            <source src="Assets\IRONFIST LOGO INTRO.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo-link">
+                <img src="Assets\iron-fist-icon-4.png" width="60" height="42" alt="Site Logo" class="logo">
+            </a>
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="the origin.html">Origin</a></li>
+                <li><a href="characters.html">Factions</a></li>
+                <li><a href="the war.html">War</a></li>
+                <li><a href="the lore.html">Lore</a></li>
+            </ul>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <br>
+
+    <header class="hero">
+        <div class="hero-content">
+
+            <!-- Fist Emblem -->
+            <div class="fist-wrap">
+                <div class="fist-ring"></div>
+                <div class="fist-disc">
+                    <!-- Chi Power Fist: fist + radiating energy rays + chi core -->
+                    <svg class="fist-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <radialGradient id="chiCore" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#fff9c4" stop-opacity="1" />
+                                <stop offset="40%" stop-color="#ffcc00" stop-opacity="0.9" />
+                                <stop offset="100%" stop-color="#ff8800" stop-opacity="0" />
+                            </radialGradient>
+                        </defs>
+
+                        <!-- Energy rays radiating outward (8 directions) -->
+                        <g stroke="#ffcc00" stroke-linecap="round" opacity="0.55">
+                            <line x1="50" y1="50" x2="50" y2="6" stroke-width="1.2" />
+                            <line x1="50" y1="50" x2="50" y2="94" stroke-width="1.2" />
+                            <line x1="50" y1="50" x2="6" y2="50" stroke-width="1.2" />
+                            <line x1="50" y1="50" x2="94" y2="50" stroke-width="1.2" />
+                            <line x1="50" y1="50" x2="21" y2="21" stroke-width="0.8" opacity="0.4" />
+                            <line x1="50" y1="50" x2="79" y2="21" stroke-width="0.8" opacity="0.4" />
+                            <line x1="50" y1="50" x2="21" y2="79" stroke-width="0.8" opacity="0.4" />
+                            <line x1="50" y1="50" x2="79" y2="79" stroke-width="0.8" opacity="0.4" />
+                        </g>
+
+                        <!-- Short inner burst lines (closer energy) -->
+                        <g stroke="#ffe040" stroke-linecap="round" opacity="0.7">
+                            <line x1="50" y1="50" x2="50" y2="22" stroke-width="2" />
+                            <line x1="50" y1="50" x2="50" y2="78" stroke-width="2" />
+                            <line x1="50" y1="50" x2="22" y2="50" stroke-width="2" />
+                            <line x1="50" y1="50" x2="78" y2="50" stroke-width="2" />
+                            <line x1="50" y1="50" x2="29" y2="29" stroke-width="1.5" />
+                            <line x1="50" y1="50" x2="71" y2="29" stroke-width="1.5" />
+                            <line x1="50" y1="50" x2="29" y2="71" stroke-width="1.5" />
+                            <line x1="50" y1="50" x2="71" y2="71" stroke-width="1.5" />
+                        </g>
+
+                        <!-- Fist body (fingers) -->
+                        <rect x="32" y="28" width="8.5" height="20" rx="3.5" fill="#ffcc00" />
+                        <rect x="42" y="24" width="8.5" height="24" rx="3.5" fill="#ffcc00" />
+                        <rect x="52" y="26" width="8.5" height="22" rx="3.5" fill="#ffcc00" />
+                        <rect x="62" y="30" width="8" height="18" rx="3.5" fill="#ffcc00" />
+
+                        <!-- Palm -->
+                        <rect x="28" y="44" width="46" height="22" rx="4" fill="#ffcc00" />
+
+                        <!-- Thumb -->
+                        <rect x="18" y="48" width="13" height="10" rx="4" fill="#ffcc00" />
+
+                        <!-- Knuckle grooves -->
+                        <g stroke="#050605" stroke-width="1.2">
+                            <line x1="38" y1="44" x2="38" y2="51" />
+                            <line x1="47" y1="44" x2="47" y2="51" />
+                            <line x1="57" y1="44" x2="57" y2="51" />
+                            <line x1="66" y1="44" x2="66" y2="51" />
+                        </g>
+
+                        <!-- Chi core glow on knuckle face -->
+                        <ellipse cx="50" cy="48" rx="14" ry="6" fill="url(#chiCore)" opacity="0.75" />
+                    </svg>
+                </div>
+            </div>
+
+            <p class="hero-eyebrow">The Immortal Weapon</p>
+            <h1 class="hero-text-logo glow-text">IRON<br>FIST</h1>
+            <br>
+            <br>
+            <p class="hero-tagline">Sworn Defender &middot; K'un-Lun &middot; Chi Warrior</p>
+            <div class="hero-divider"></div>
+            <p class="hero-desc">
+                Danny Rand returns from the mystical city of K'un&#8209;Lun with the power of the Iron Fist &mdash;
+                a weapon forged from chi. Now he faces the shadows threatening New York City.
+            </p>
+
+            <div class="cta-group">
+                <button class="btn-slim btn-gold" onclick="window.location.href='the origin.html'">Summon the
+                    Chi</button>
+                <button class="btn-slim btn-ghost" onclick="window.location.href='characters.html'">Meet the
+                    Factions</button>
+            </div>
+        </div>
+    </header>
+
+    <script src="js/main.js"></script>
+
+    <script>
+        window.addEventListener("load", () => {
+            const loader = document.getElementById("intro-loader");
+            const video = document.getElementById("intro-video");
+
+            // 1. Switch to sessionStorage to allow the intro once per tab session
+            if (sessionStorage.getItem("introPlayed") === "true") {
+                if (loader) {
+                    loader.style.display = "none"; // Hide immediately
+                    loader.remove();
+                }
+                return;
+            }
+
+            // 2. Play intro normally
+            if (video) {
+                video.play().catch(error => {
+                    // Browsers often block autoplay; if it fails, just remove the loader
+                    console.log("Autoplay blocked or failed:", error);
+                    loader.remove();
+                });
+
+                video.onended = () => {
+                    loader.classList.add("fade-out");
+
+                    setTimeout(() => {
+                        loader.remove();
+                        // 3. Mark as played for THIS session only
+                        sessionStorage.setItem("introPlayed", "true");
+                    }, 600);
+                };
+            } else {
+                // Safety check: if no video found, remove loader so site isn't stuck
+                if (loader) loader.remove();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

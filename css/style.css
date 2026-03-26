@@ -446,3 +446,32 @@ nav {
         object-fit: cover;
     }
 }
+
+/* ===================== FOOTER ===================== */
+footer {
+    padding: 3rem 1rem;
+    text-align: center;
+    background: var(--bg-darker);
+    border-top: 1px solid rgba(255, 204, 0, 0.1);
+    margin-top: 4rem;
+    position: relative;
+    z-index: 2;
+}
+
+.footer-text {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    max-width: 600px;
+    margin: 0 auto;
+    text-transform: uppercase;
+}
+
+.footer-disclaimer {
+    display: block;
+    margin-top: 0.8rem;
+    font-size: 0.75rem;
+    opacity: 0.6;
+    letter-spacing: 1px;
+}

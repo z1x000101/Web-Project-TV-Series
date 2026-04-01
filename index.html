@@ -33,74 +33,101 @@
             z-index: 0;
         }
 
-        /* ── Fist emblem ── */
-        .fist-wrap {
+        /* ── Chi Emblem ── */
+        .chi-wrap {
             position: relative;
-            width: clamp(130px, 22vw, 200px);
-            height: clamp(130px, 22vw, 200px);
+            width: clamp(140px, 24vw, 220px);
+            height: clamp(140px, 24vw, 220px);
             margin: 0 auto 2rem;
+            cursor: pointer;
+            perspective: 800px;
         }
 
-        /* Rotating ring */
-        .fist-ring {
+        .chi-emblem {
+            position: absolute;
+            inset: 0;
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* Outer runic ring */
+        .chi-ring-outer {
             position: absolute;
             inset: 0;
             border-radius: 50%;
-            border: 1.5px solid rgba(255, 204, 0, 0.35);
-            animation: spinRing 18s linear infinite;
+            border: 1px dashed rgba(255, 204, 0, 0.4);
+            animation: spinRight 25s linear infinite;
         }
 
-        .fist-ring::before {
-            content: '';
+        /* Inner solid ring */
+        .chi-ring-inner {
             position: absolute;
-            top: -4px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 8px;
-            height: 8px;
+            inset: 16px;
             border-radius: 50%;
-            background: var(--primary-gold);
-            box-shadow: 0 0 12px var(--primary-gold);
+            border: 2px solid rgba(255, 204, 0, 0.15);
+            border-top-color: var(--primary-gold);
+            border-bottom-color: var(--primary-gold);
+            animation: spinLeft 15s linear infinite;
+            box-shadow: inset 0 0 15px rgba(255, 204, 0, 0.05);
+            transition: all 0.5s ease;
         }
 
-        @keyframes spinRing {
-            to {
-                transform: rotate(360deg);
-            }
+        .chi-wrap:hover .chi-ring-inner {
+            border-color: var(--primary-gold);
+            box-shadow: inset 0 0 25px rgba(255, 204, 0, 0.2), 0 0 25px rgba(255, 204, 0, 0.2);
+            animation: spinLeft 5s linear infinite;
         }
 
-        /* Inner glow disc */
-        .fist-disc {
+        /* The core */
+        .chi-core {
             position: absolute;
-            inset: 12px;
+            inset: 32px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 204, 0, 0.10) 0%, rgba(5, 6, 5, 0.95) 65%);
-            border: 1px solid rgba(255, 204, 0, 0.15);
+            background: radial-gradient(circle, rgba(255, 204, 0, 0.15) 0%, rgba(5, 6, 5, 0.95) 75%);
+            border: 1px solid rgba(255, 204, 0, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+            transition: all 0.5s ease;
         }
 
-        /* SVG fist icon */
-        .fist-svg {
-            width: 52%;
-            height: 52%;
-            filter: drop-shadow(0 0 14px rgba(255, 204, 0, 0.55));
-            animation: fistPulse 3.5s ease-in-out infinite;
+        .chi-wrap:hover .chi-core {
+            background: radial-gradient(circle, rgba(255, 204, 0, 0.3) 0%, rgba(5, 6, 5, 0.9) 70%);
+            border-color: rgba(255, 204, 0, 0.8);
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.4);
         }
 
-        @keyframes fistPulse {
+        .chi-logo-img {
+            width: 60%;
+            height: 60%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(255, 204, 0, 0.6));
+            animation: pulseLogo 3s ease-in-out infinite alternate;
+            transition: all 0.4s ease;
+        }
 
-            0%,
-            100% {
-                filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.4));
-                transform: scale(1);
-            }
+        .chi-wrap:hover .chi-logo-img {
+            filter: drop-shadow(0 0 20px var(--primary-gold)) brightness(1.2);
+            animation: pulseLogoHover 1.5s ease-in-out infinite alternate;
+            transform: scale(1.15);
+        }
 
-            50% {
-                filter: drop-shadow(0 0 22px rgba(255, 204, 0, 0.75));
-                transform: scale(1.04);
-            }
+        @keyframes pulseLogo {
+            from { filter: drop-shadow(0 0 6px rgba(255, 204, 0, 0.4)); transform: scale(0.95); }
+            to { filter: drop-shadow(0 0 15px rgba(255, 204, 0, 0.8)); transform: scale(1.05); }
+        }
+
+        @keyframes pulseLogoHover {
+            from { filter: drop-shadow(0 0 15px var(--primary-gold)) brightness(1.1); transform: scale(1.1); }
+            to { filter: drop-shadow(0 0 30px var(--primary-gold)) brightness(1.3); transform: scale(1.25); }
+        }
+
+        @keyframes spinRight {
+            to { transform: rotate(360deg); }
+        }
+        @keyframes spinLeft {
+            to { transform: rotate(-360deg); }
         }
 
         /* ── Hero content ── */
@@ -308,67 +335,15 @@
     <header class="hero">
         <div class="hero-content">
 
-            <!-- Fist Emblem -->
-            <div class="fist-wrap">
-                <div class="fist-ring"></div>
-                <div class="fist-disc">
-                    <!-- Chi Power Fist: fist + radiating energy rays + chi core -->
-                    <svg class="fist-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <radialGradient id="chiCore" cx="50%" cy="50%" r="50%">
-                                <stop offset="0%" stop-color="#fff9c4" stop-opacity="1" />
-                                <stop offset="40%" stop-color="#ffcc00" stop-opacity="0.9" />
-                                <stop offset="100%" stop-color="#ff8800" stop-opacity="0" />
-                            </radialGradient>
-                        </defs>
-
-                        <!-- Energy rays radiating outward (8 directions) -->
-                        <g stroke="#ffcc00" stroke-linecap="round" opacity="0.55">
-                            <line x1="50" y1="50" x2="50" y2="6" stroke-width="1.2" />
-                            <line x1="50" y1="50" x2="50" y2="94" stroke-width="1.2" />
-                            <line x1="50" y1="50" x2="6" y2="50" stroke-width="1.2" />
-                            <line x1="50" y1="50" x2="94" y2="50" stroke-width="1.2" />
-                            <line x1="50" y1="50" x2="21" y2="21" stroke-width="0.8" opacity="0.4" />
-                            <line x1="50" y1="50" x2="79" y2="21" stroke-width="0.8" opacity="0.4" />
-                            <line x1="50" y1="50" x2="21" y2="79" stroke-width="0.8" opacity="0.4" />
-                            <line x1="50" y1="50" x2="79" y2="79" stroke-width="0.8" opacity="0.4" />
-                        </g>
-
-                        <!-- Short inner burst lines (closer energy) -->
-                        <g stroke="#ffe040" stroke-linecap="round" opacity="0.7">
-                            <line x1="50" y1="50" x2="50" y2="22" stroke-width="2" />
-                            <line x1="50" y1="50" x2="50" y2="78" stroke-width="2" />
-                            <line x1="50" y1="50" x2="22" y2="50" stroke-width="2" />
-                            <line x1="50" y1="50" x2="78" y2="50" stroke-width="2" />
-                            <line x1="50" y1="50" x2="29" y2="29" stroke-width="1.5" />
-                            <line x1="50" y1="50" x2="71" y2="29" stroke-width="1.5" />
-                            <line x1="50" y1="50" x2="29" y2="71" stroke-width="1.5" />
-                            <line x1="50" y1="50" x2="71" y2="71" stroke-width="1.5" />
-                        </g>
-
-                        <!-- Fist body (fingers) -->
-                        <rect x="32" y="28" width="8.5" height="20" rx="3.5" fill="#ffcc00" />
-                        <rect x="42" y="24" width="8.5" height="24" rx="3.5" fill="#ffcc00" />
-                        <rect x="52" y="26" width="8.5" height="22" rx="3.5" fill="#ffcc00" />
-                        <rect x="62" y="30" width="8" height="18" rx="3.5" fill="#ffcc00" />
-
-                        <!-- Palm -->
-                        <rect x="28" y="44" width="46" height="22" rx="4" fill="#ffcc00" />
-
-                        <!-- Thumb -->
-                        <rect x="18" y="48" width="13" height="10" rx="4" fill="#ffcc00" />
-
-                        <!-- Knuckle grooves -->
-                        <g stroke="#050605" stroke-width="1.2">
-                            <line x1="38" y1="44" x2="38" y2="51" />
-                            <line x1="47" y1="44" x2="47" y2="51" />
-                            <line x1="57" y1="44" x2="57" y2="51" />
-                            <line x1="66" y1="44" x2="66" y2="51" />
-                        </g>
-
-                        <!-- Chi core glow on knuckle face -->
-                        <ellipse cx="50" cy="48" rx="14" ry="6" fill="url(#chiCore)" opacity="0.75" />
-                    </svg>
+            <!-- Chi Emblem -->
+            <div class="chi-wrap" id="chiEmblem">
+                <div class="chi-emblem" id="chiEmblemInner">
+                    <div class="chi-ring-outer"></div>
+                    <div class="chi-ring-inner"></div>
+                    <div class="chi-core">
+                        <!-- Official Iron Fist Logo -->
+                        <img src="Assets\iron-fist-icon-4.png" alt="Iron Fist Logo" class="chi-logo-img">
+                    </div>
                 </div>
             </div>
 
@@ -430,9 +405,32 @@
                 if (loader) loader.remove();
             }
         });
+
+        // Interactive Chi Emblem 3D Hover Effect
+        const chiWrap = document.getElementById('chiEmblem');
+        const chiInner = document.getElementById('chiEmblemInner');
+        if (chiWrap && chiInner) {
+            chiWrap.addEventListener('mousemove', (e) => {
+                const rect = chiWrap.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                const rotateX = (y / rect.height) * -40; // Max rotation X
+                const rotateY = (x / rect.width) * 40;  // Max rotation Y
+                chiInner.style.transform = `scale(1.1) translateZ(20px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            chiWrap.addEventListener('mouseleave', () => {
+                chiInner.style.transform = 'scale(1) translateZ(0) rotateX(0) rotateY(0)';
+                setTimeout(() => {
+                    // Slight reset delay to allow CSS transition to smooth out
+                    if(!chiWrap.matches(':hover')) {
+                        chiInner.style.transform = '';
+                    }
+                }, 500);
+            });
+        }
     </script>
 
-        <footer>
+    <footer>
         <div class="footer-text">
             Fan created website dedicated to <h5 style="color: #fffb00;">Iron Fist.</h5>
             <span class="footer-disclaimer">Not affiliated with Marvel Comics.</span>
@@ -440,5 +438,6 @@
     </footer>
 
 </body>
+
 
 </html>
